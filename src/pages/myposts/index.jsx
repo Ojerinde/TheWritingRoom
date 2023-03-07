@@ -1,10 +1,10 @@
-import Navigation from "../../components/Navigation/Navigation";
+import { Outlet } from "react-router-dom";
 
-const MyPosts = () => {
+const MyPostsHome = () => {
   return (
     <>
-      <Navigation />
+      <Outlet />
     </>
   );
 };
-export default MyPosts;
+export default MyPostsHome;

@@ -6,7 +6,9 @@ import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import LandingPage from "./pages/landingpage";
-import MyPosts from "./pages/myposts";
+import MyPostsHome from "./pages/myposts";
+import MyPosts from "./pages/myposts/MyPosts";
+import AddNewPost from "./pages/myposts/AddPost";
 
 // Dynamic Imports (Lazy - loading)
 const Home = lazy(() => import("./pages/home"));
@@ -38,12 +40,13 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/myposts" element={<MyPosts />} />
 
-          {/* <Route path="/home" element={<AppHome />}>
-            <Route path="" element={<Home />} />
-            <Route path=":id" element={<RepoDetails />} />
-          </Route> */}
+          {/* Nexted Route */}
+          <Route path="/myposts" element={<MyPostsHome />}>
+            <Route path="" element={<MyPosts />} />
+            <Route path="addpost" element={<AddNewPost />} />
+          </Route>
+
           {/* Routes that will be matched if none of tthe route(s) is matched */}
           {/* <Route path="*" element={<ErrorPage />} /> */}
         </Routes>

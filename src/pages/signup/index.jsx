@@ -15,7 +15,7 @@ const SignUp = () => {
         <Form onSubmit={signUpHandler} />
         <p className={classes.p}>
           Already have an account?
-          <Link href="/login" className={classes.a}>
+          <Link to="/login" className={classes.a}>
             Login
           </Link>
         </p>

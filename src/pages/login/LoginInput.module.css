@@ -13,11 +13,11 @@
 }
 
 .input {
-  padding: 1rem;
+  padding: 1.4rem;
   border-radius: 0.4rem;
   border: 0.1rem solid #6085aa;
   margin: 0.8rem 0 1.5rem 0;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 300;
   color: #3a516a;
   width: 100%;
@@ -30,7 +30,7 @@
 
 .input::placeholder {
   color: #656262;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   letter-spacing: 0.1rem;
 }
 

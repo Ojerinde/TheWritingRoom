@@ -1,73 +1,117 @@
 .pagination {
   &__card {
-    width: 40%;
-    margin: 4rem auto 0;
+    width: 70%;
+    margin: 4rem auto 3rem auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-
+  &__icons--box {
+    flex-basis: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   &__icons--prev,
   &__icons--next {
-    height: 4.5rem;
-    width: 4.5rem;
-    fill: $secondary-color;
+    height: 3.5rem;
+    width: 3.5rem;
+    fill: $primary-color;
     cursor: pointer;
 
     &:hover {
-      fill: $secondary-light-color;
+      fill: $primary-light-color;
     }
+  }
+
+  &__icons--paragraph {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: $primary-dark-color;
   }
 
   &__buttons {
-    flex-basis: 80%;
+    flex-basis: 75%;
     display: flex;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
 
-    & .icon {
-      height: 3rem;
-      width: 3rem;
-      fill: $secondary-dark-color;
+    & button {
+      text-align: center;
+      padding: 0.7rem 1.1rem;
+      margin: 0 0.3rem 0.3rem 0.3rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      background-color: $primary-dark-color;
+      color: $secondary-color;
+      border-radius: 0.5rem;
+      border: 0.2rem solid transparent;
+      box-shadow: $box-shadow;
+      transition: all 0.3s;
       cursor: pointer;
 
       &:hover {
-        fill: #75466a;
-        fill-opacity: 0.6;
+        border: 0.2rem solid $primary-dark-color;
+        background-color: $secondary-light-color;
+        transform: translateY(-0.3rem);
+        color: $primary-color;
+      }
+
+      &.active__button,
+      &:focus {
+        border: 0.2rem solid $primary-color;
+        color: $primary-color;
+        background-color: #fff;
       }
     }
-
-    & .icon__active {
-      fill: rgb(51, 50, 50);
-    }
   }
 }
-.box {
-  position: relative;
-}
-.icon__text {
-  position: absolute;
-  top: 0;
-  left: 10%;
-  transform: translate(-50%, -50%);
-}
+
 .not__allowed {
   cursor: not-allowed !important;
-  fill: rgba($primary-color, 0.8) !important;
+  fill: $secondary-dark-color !important;
 }
 
-@media only screen and (max-width: $bp--medium) {
+@media only screen and (max-width: 900px) {
   .pagination {
     &__card {
-      width: 55%;
+      width: 90%;
     }
-  }
-}
+    &__icons--box {
+      flex-basis: 25%;
+    }
+    &__icons--prev,
+    &__icons--next {
+      font-size: 1.5rem;
+    }
 
-@media only screen and (max-width: $bp--small) {
-  .pagination {
-    &__card {
-      width: 65%;
+    &__icons--paragraph {
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+
+    &__buttons {
+      flex-basis: 70%;
+
+      & button {
+        text-align: center;
+        padding: 0.3rem 0.5rem;
+        margin: 0 0.3rem 0.3rem 0.3rem;
+        font-size: 1rem;
+        font-weight: 400;
+
+        border-radius: 0.3rem;
+        border: 0.1rem solid transparent;
+
+        &:hover {
+          border: 0.1rem solid $primary-color;
+        }
+
+        &:focus {
+          border: 0.1rem solid $primary-color;
+        }
+      }
     }
   }
 }

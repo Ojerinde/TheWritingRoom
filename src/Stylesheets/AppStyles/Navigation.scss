@@ -6,7 +6,7 @@
   justify-content: space-between;
 
   & .logo {
-    flex-basis: 43%;
+    flex-basis: 25%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -55,6 +55,13 @@
 .header__active {
   color: $secondary-light-color !important;
   background-color: rgba($secondary-dark-color, 0.6);
+}
+.sticky {
+  width: 100%;
+  position: fixed;
+  background-color: rgba(135, 132, 132, 0.928);
+  z-index: 100;
+  top: 0;
 }
 
 @media only screen and (max-width: $bp--small) {

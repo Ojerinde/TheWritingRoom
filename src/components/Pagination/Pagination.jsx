@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { ImPrevious, ImNext } from "react-icons/im";
 
 const Pagination = (props) => {
-  const productsPerPage = props.productsPerPage;
-  const totalProducts = props.totalProducts;
+  const postsPerPage = props.postsPerPage;
+  const totalPosts = props.totalPosts;
 
-  const total_pages = Math.ceil(totalProducts / productsPerPage);
+  const total_pages = Math.ceil(totalPosts / postsPerPage);
 
   const [page, setPage] = useState(1);
 
@@ -22,20 +23,19 @@ const Pagination = (props) => {
   return (
     <div className="pagination__card">
       <div className="pagination__icons--box">
-        <i
+        <ImPrevious
           onClick={prevHandler}
-          className={`icofont-arrow-left pagination__icons--prev ${
+          className={`pagination__icons--prev ${
             page === 1 ? " not__allowed" : ""
           }`}
-        ></i>
-
+        />
         <p className="pagination__icons--paragraph">{page}</p>
-        <i
+        <ImNext
           onClick={nextHandler}
-          className={` icofont-arrow-right pagination__icons--next ${
+          className={`pagination__icons--next ${
             page === total_pages || total_pages < 1 ? " not__allowed" : ""
           }`}
-        ></i>
+        />
       </div>
       <div className="pagination__buttons">
         {Array.from({ length: total_pages }, (_, index) => index + 1).map(
@@ -46,6 +46,7 @@ const Pagination = (props) => {
                 props.onChange(each);
                 setPage((page) => each);
               }}
+              className={`${page === each ? "active__button" : ""}`}
             >
               {each}
             </button>

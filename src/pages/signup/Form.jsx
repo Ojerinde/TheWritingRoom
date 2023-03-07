@@ -243,7 +243,7 @@ const Form = ({ setError, loading, onSubmit }) => {
             invalid={
               !form.firstnameIsValid && form.nameIsFocus ? "invalid" : ""
             }
-            placeholder="Enter your firstname"
+            placeholder="Enter your first name"
             value={form.firstname}
             onChange={firstnameOnChangeHandler}
             onBlur={firstnameOnBlurHandler}
@@ -260,7 +260,7 @@ const Form = ({ setError, loading, onSubmit }) => {
             label="Last Name"
             type="text"
             invalid={!form.lastnameIsValid && form.lastname ? "invalid" : ""}
-            placeholder="Enter your lastname"
+            placeholder="Enter your last name"
             value={form.lastname}
             onChange={lastnameOnChangeHandler}
             onBlur={lastnameOnBlurHandler}
