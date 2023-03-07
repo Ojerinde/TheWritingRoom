@@ -1,0 +1,73 @@
+.pagination {
+  &__card {
+    width: 40%;
+    margin: 4rem auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__icons--prev,
+  &__icons--next {
+    height: 4.5rem;
+    width: 4.5rem;
+    fill: $secondary-color;
+    cursor: pointer;
+
+    &:hover {
+      fill: $secondary-light-color;
+    }
+  }
+
+  &__buttons {
+    flex-basis: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    & .icon {
+      height: 3rem;
+      width: 3rem;
+      fill: $secondary-dark-color;
+      cursor: pointer;
+
+      &:hover {
+        fill: #75466a;
+        fill-opacity: 0.6;
+      }
+    }
+
+    & .icon__active {
+      fill: rgb(51, 50, 50);
+    }
+  }
+}
+.box {
+  position: relative;
+}
+.icon__text {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+.not__allowed {
+  cursor: not-allowed !important;
+  fill: rgba($primary-color, 0.8) !important;
+}
+
+@media only screen and (max-width: $bp--medium) {
+  .pagination {
+    &__card {
+      width: 55%;
+    }
+  }
+}
+
+@media only screen and (max-width: $bp--small) {
+  .pagination {
+    &__card {
+      width: 65%;
+    }
+  }
+}
