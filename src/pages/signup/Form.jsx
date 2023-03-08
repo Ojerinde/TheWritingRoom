@@ -7,6 +7,20 @@ import Button from "../../components/UI/Button";
 
 import classes from "./SignUpForm.module.css";
 // import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+
+const checkFormValidity = (form) => {
+  const { firstnameIsValid, lastnameIsValid, emailIsValid, passwordIsValid, confirmpasswordIsValid } = form;
+  if (firstnameIsValid && lastnameIsValid && emailIsValid && passwordIsValid && confirmpasswordIsValid) {
+    setForm((prev) => {
+      return { ...prev, formIsValid: true };
+    });
+  } else {
+    setForm((prev) => {
+      return { ...prev, formIsValid: false };
+    });
+  }
+}
+
 const Form = ({ setError, loading, onSubmit }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -33,53 +47,21 @@ const Form = ({ setError, loading, onSubmit }) => {
     setForm((prev) => {
       return { ...prev, firstname: e.target.value };
     });
-    const { firstnameIsValid } = form;
-    const isValid = e.target.value.length > 3 || e.target.value.length < 10;
 
-    if (firstnameIsValid && isValid) {
-      setForm((prev) => {
-        return { ...prev, formIsValid: true };
-      });
-    } else {
-      setForm((prev) => {
-        return { ...prev, formIsValid: false };
-      });
-    }
+
   };
   const lastnameOnChangeHandler = (e) => {
     setForm((prev) => {
       return { ...prev, lastname: e.target.value };
     });
-    const { lastnameIsValid } = form;
-    const isValid = e.target.value.length > 3 || e.target.value.length < 10;
 
-    if (lastnameIsValid && isValid) {
-      setForm((prev) => {
-        return { ...prev, formIsValid: true };
-      });
-    } else {
-      setForm((prev) => {
-        return { ...prev, formIsValid: false };
-      });
-    }
   };
 
   const emailOnChangeHandler = (e) => {
     setForm((prev) => {
       return { ...prev, email: e.target.value };
     });
-    const { passwordIsValid } = form;
-    const isValid = ValidateEmail(e.target.value);
 
-    if (passwordIsValid && isValid) {
-      setForm((prev) => {
-        return { ...prev, formIsValid: true };
-      });
-    } else {
-      setForm((prev) => {
-        return { ...prev, formIsValid: false };
-      });
-    }
   };
 
   const passwordOnChangeHandler = (e) => {
@@ -87,36 +69,13 @@ const Form = ({ setError, loading, onSubmit }) => {
       return { ...prev, password: e.target.value };
     });
 
-    const { emailIsValid } = form;
-    const isValid = ValidatePassword(e.target.value);
-
-    if (emailIsValid && isValid) {
-      setForm((prev) => {
-        return { ...prev, formIsValid: true };
-      });
-    } else {
-      setForm((prev) => {
-        return { ...prev, formIsValid: false };
-      });
-    }
   };
+
   const confirmpasswordOnChangeHandler = (e) => {
     setForm((prev) => {
       return { ...prev, confirmpassword: e.target.value };
     });
 
-    const { emailIsValid } = form;
-    const isValid = e.target.value === form.password;
-
-    if (emailIsValid && isValid) {
-      setForm((prev) => {
-        return { ...prev, formIsValid: true };
-      });
-    } else {
-      setForm((prev) => {
-        return { ...prev, formIsValid: false };
-      });
-    }
   };
 
   // Allowing the user to unfocus the input field before checking if the input field is correct.
@@ -134,7 +93,9 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, firstnameIsValid: false };
       });
     }
+    checkFormValidity(form)
   };
+
   const lastnameOnBlurHandler = (e) => {
     setForm((prev) => {
       return { ...prev, lastnameIsFocus: true };
@@ -149,6 +110,8 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, lastnameIsValid: false };
       });
     }
+    checkFormValidity(form)
+
   };
   const emailOnBlurHandler = (e) => {
     setForm((prev) => {
@@ -165,6 +128,8 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, emailIsValid: false };
       });
     }
+    checkFormValidity(form)
+
   };
 
   const passwordOnBlurHandler = (e) => {
@@ -182,6 +147,8 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, passwordIsValid: false };
       });
     }
+    checkFormValidity(form)
+
   };
 
   const confirmpasswordOnBlurHandler = (e) => {
@@ -199,6 +166,8 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, confirmpasswordIsValid: false };
       });
     }
+    checkFormValidity(form)
+
   };
 
   const submitHandler = (event) => {
