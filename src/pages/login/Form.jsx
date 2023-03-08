@@ -68,7 +68,12 @@ const Form = ({ onSubmit }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-
+    const { emailIsValid, passwordIsValid } = form;
+    if (!emailIsValid || !passwordIsValid) return;
+    console.log({
+      email: form.email,
+      password: form.password,
+    });
     // Send form details to parent component
     onSubmit({
       email: form.email,

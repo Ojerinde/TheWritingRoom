@@ -8,9 +8,16 @@ import Button from "../../components/UI/Button";
 import classes from "./SignUpForm.module.css";
 // import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
-const checkFormValidity = (form) => {
-  const { firstnameIsValid, lastnameIsValid, emailIsValid, passwordIsValid, confirmpasswordIsValid } = form;
-  if (firstnameIsValid && lastnameIsValid && emailIsValid && passwordIsValid && confirmpasswordIsValid) {
+const checkFormValidity = (form, setForm, e = {}) => {
+  const { firstnameIsValid, lastnameIsValid, emailIsValid, passwordIsValid } =
+    form;
+  if (
+    firstnameIsValid &&
+    lastnameIsValid &&
+    emailIsValid &&
+    passwordIsValid &&
+    e.target.value === form.password
+  ) {
     setForm((prev) => {
       return { ...prev, formIsValid: true };
     });
@@ -19,9 +26,9 @@ const checkFormValidity = (form) => {
       return { ...prev, formIsValid: false };
     });
   }
-}
+};
 
-const Form = ({ setError, loading, onSubmit }) => {
+const Form = ({ onSubmit }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordIcon] = useState(true);
@@ -47,35 +54,29 @@ const Form = ({ setError, loading, onSubmit }) => {
     setForm((prev) => {
       return { ...prev, firstname: e.target.value };
     });
-
-
   };
   const lastnameOnChangeHandler = (e) => {
     setForm((prev) => {
       return { ...prev, lastname: e.target.value };
     });
-
   };
 
   const emailOnChangeHandler = (e) => {
     setForm((prev) => {
       return { ...prev, email: e.target.value };
     });
-
   };
 
   const passwordOnChangeHandler = (e) => {
     setForm((prev) => {
       return { ...prev, password: e.target.value };
     });
-
   };
 
   const confirmpasswordOnChangeHandler = (e) => {
     setForm((prev) => {
       return { ...prev, confirmpassword: e.target.value };
     });
-
   };
 
   // Allowing the user to unfocus the input field before checking if the input field is correct.
@@ -93,7 +94,7 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, firstnameIsValid: false };
       });
     }
-    checkFormValidity(form)
+    checkFormValidity(form, setForm);
   };
 
   const lastnameOnBlurHandler = (e) => {
@@ -110,8 +111,7 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, lastnameIsValid: false };
       });
     }
-    checkFormValidity(form)
-
+    checkFormValidity(form, setForm);
   };
   const emailOnBlurHandler = (e) => {
     setForm((prev) => {
@@ -128,8 +128,7 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, emailIsValid: false };
       });
     }
-    checkFormValidity(form)
-
+    checkFormValidity(form, setForm);
   };
 
   const passwordOnBlurHandler = (e) => {
@@ -147,13 +146,12 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, passwordIsValid: false };
       });
     }
-    checkFormValidity(form)
-
+    checkFormValidity(form, setForm);
   };
 
   const confirmpasswordOnBlurHandler = (e) => {
     setForm((prev) => {
-      return { ...prev, passwordIsFocus: true };
+      return { ...prev, confirmpasswordIsFocus: true };
     });
 
     const isValid = form.password === form.confirmpassword;
@@ -166,19 +164,26 @@ const Form = ({ setError, loading, onSubmit }) => {
         return { ...prev, confirmpasswordIsValid: false };
       });
     }
-    checkFormValidity(form)
-
+    checkFormValidity(form, setForm, e);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
     // Send form details to backend
-    onSubmit({
-      first_name: form.firstname,
-      last_name: form.lastname,
+    console.log({
+      firstname: form.firstname,
+      lastname: form.lastname,
       email: form.email,
       password: form.password,
-      repeat_password: form.confirmpassword,
+      confirmpassword: form.confirmpassword,
+    });
+
+    onSubmit({
+      firstname: form.firstname,
+      lastname: form.lastname,
+      email: form.email,
+      password: form.password,
+      confirmpassword: form.confirmpassword,
     });
 
     // Clearing the input fields
@@ -284,7 +289,7 @@ const Form = ({ setError, loading, onSubmit }) => {
           <Input
             id="confirmpassword"
             label="Confirm Password"
-            type={showPassword ? "text" : "password"}
+            type={showConfirmPassword ? "text" : "password"}
             invalid={
               !form.confirmpasswordIsValid && form.confirmpasswordIsFocus
                 ? "invalid"
@@ -300,7 +305,7 @@ const Form = ({ setError, loading, onSubmit }) => {
           />
           {form.confirmpasswordIsFocus && !form.confirmpasswordIsValid && (
             <pre className={classes.invalid__input}>
-              MinLength(8), uppercase, lowercase, character, number
+              Password does not match!
             </pre>
           )}
         </div>

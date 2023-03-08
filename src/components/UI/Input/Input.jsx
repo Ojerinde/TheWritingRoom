@@ -1,7 +1,7 @@
 import React from "react";
 
 const Input = React.forwardRef((props, ref) => {
-  const { field = "input", ...others } = props;
+  const { field = "input", className, ...others } = props;
 
   return (
     <div className="input__group">
@@ -9,7 +9,7 @@ const Input = React.forwardRef((props, ref) => {
       {field === "input" ? (
         <input {...others} ref={ref}></input>
       ) : (
-        <textarea {...others} ref={ref}></textarea>
+        <textarea {...others} ref={ref} className={className}></textarea>
       )}
     </div>
   );
