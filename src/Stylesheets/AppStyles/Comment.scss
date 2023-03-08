@@ -1,34 +1,23 @@
 .comment {
+  &__list {
+    list-style: none;
+  }
+
   &__item {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-
-    &--author {
-      font-size: 18px;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    &--date {
-      font-size: 14px;
-      color: #999;
-      margin: 0;
-    }
-  }
-  &__body {
-    font-size: 16px;
-    line-height: 1.5;
-
-    &--text {
-      margin: 0;
-    }
+    border: 0.1rem solid #ccc;
+    padding: 1.5rem;
+    border-radius: 0.3rem;
+    margin: 0.8rem 0;
   }
 
+  &__author {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  &__text {
+    font-size: 1.6rem;
+    line-height: 1.4;
+  }
 }

@@ -29,7 +29,7 @@ const Navigation = () => {
   }, []);
 
   return (
-    <header className="navigation__container">
+    <header className="navigation__container" id="header">
       <nav className="main__header" id="nav">
         <div
           className="logo"

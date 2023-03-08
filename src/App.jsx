@@ -11,6 +11,7 @@ import MyPosts from "./pages/myposts/MyPosts";
 import AddNewPost from "./pages/myposts/AddPost";
 import PostDetails from "./pages/myposts/PostDetails";
 import PostsHome from "./pages/home";
+import NotFound from "./pages/404/NotFound";
 
 // Dynamic Imports (Lazy - loading)
 const Home = lazy(() => import("./pages/home/Home"));
@@ -42,20 +43,27 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
 
+          {/* Nexted Route */}
           <Route path="/posts" element={<PostsHome />}>
             <Route path="" element={<Home />} />
-            <Route path=":postId" element={<PostDetails />} />
+            <Route path=":postId" element={<PostsHome />}>
+              <Route path="" element={<PostDetails />} />
+              <Route path="edit" element={<AddNewPost />} />
+            </Route>
           </Route>
 
           {/* Nexted Route */}
           <Route path="/myposts" element={<MyPostsHome />}>
             <Route path="" element={<MyPosts />} />
-            <Route path=":postId" element={<PostDetails />} />
             <Route path="addpost" element={<AddNewPost />} />
+            <Route path=":postId" element={<PostsHome />}>
+              <Route path="" element={<PostDetails />} />
+              <Route path="edit" element={<AddNewPost />} />
+            </Route>
           </Route>
 
           {/* Routes that will be matched if none of tthe route(s) is matched */}
-          {/* <Route path="*" element={<ErrorPage />} /> */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </ErrorBoundary>

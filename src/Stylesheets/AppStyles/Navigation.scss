@@ -5,8 +5,12 @@
   align-items: center;
   justify-content: space-between;
 
+  @media only screen and (max-width: 650px) {
+    flex-wrap: wrap;
+  }
+
   & .logo {
-    flex-basis: 25%;
+    flex-basis: 45%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -22,6 +26,10 @@
       text-transform: uppercase;
       color: $secondary-dark-color;
     }
+
+    @media only screen and (max-width: 650px) {
+      flex-basis: 100%;
+    }
   }
 
   & ul {
@@ -29,7 +37,11 @@
     display: flex;
     justify-content: flex-end;
     flex-basis: 55%;
-
+    @media only screen and (max-width: 650px) {
+      flex-basis: 100%;
+      margin-top: 2rem;
+      justify-content: center;
+    }
     & li {
       & a:link,
       & a:visited {
@@ -64,19 +76,9 @@
   top: 0;
 }
 
-@media only screen and (max-width: $bp--small) {
+@media only screen and (max-width: 900px) {
   .main__header {
     display: flex;
-    justify-content: flex-start;
     flex-wrap: wrap;
-
-    & nav {
-      margin-top: 2.5rem;
-      flex-basis: 100%;
-
-      & ul {
-        justify-content: space-between;
-      }
-    }
   }
 }

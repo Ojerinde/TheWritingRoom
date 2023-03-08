@@ -1,13 +1,8 @@
-const CommentItem = ({ author, body, date, id }) => {
+const CommentItem = ({ author, body, id }) => {
   return (
-    <li className="comment-item">
-      <div className="comment-header">
-        <h3 className="comment-author">{author}</h3>
-        <p className="comment-date">{date}</p>
-      </div>
-      <div className="comment-body">
-        <p className="comment-text">{body}</p>
-      </div>
+    <li className="comment__item">
+      <div className="comment__author">{author}</div>
+      <div className="comment__text">{body}</div>
     </li>
   );
 };

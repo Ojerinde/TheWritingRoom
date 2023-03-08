@@ -10,7 +10,7 @@ const PostItem = ({ id, title, author, body }) => {
   };
   return (
     <li>
-      <div>
+      <div className="post__list--left">
         <h2 className="post-title">{title}</h2>
         <p className="post-author">{author}</p>
         <p className="post-body">{`${body}`.split(".")[0]}.</p>

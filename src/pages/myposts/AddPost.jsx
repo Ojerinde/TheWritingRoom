@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BsArrow90DegLeft } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Navigation from "../../components/Navigation/Navigation";
 import Button from "../../components/UI/Button";
@@ -11,8 +11,11 @@ const AddNewPost = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const backHandler = () => {
-    navigate("/myposts");
+    const lastIndex = pathname.lastIndexOf("/");
+    console.log(pathname.slice(0, lastIndex));
+    navigate(pathname.slice(0, lastIndex));
   };
   const titleOnChangeHandler = (e) => {
     setTitle(e.target.value);
@@ -22,25 +25,6 @@ const AddNewPost = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    // await AddQuestion(
-    //   {
-    //     url: `${pathname.slice(0, lastIndex)}/add_question`,
-    //     errorMessage: "Failed to create question",
-    //     method: "POST",
-    //     body: {
-    //       title: title,
-    //       question: question,
-    //       images: images,
-    //     },
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   },
-    //   (response) => {
-    //     if (response) navigate(`${pathname.slice(0, lastIndex)}/all_questions`);
-    //   }
-    // );
   };
 
   return (

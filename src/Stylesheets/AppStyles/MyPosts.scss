@@ -4,6 +4,12 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  @media only screen and (max-width: 1000px) {
+    width: 85%;
+  }
+  @media only screen and (max-width: 768px) {
+    width: 95%;
+  }
 
   &--icon {
     height: 5rem;

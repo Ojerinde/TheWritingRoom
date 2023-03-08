@@ -1,5 +1,5 @@
 import Navigation from "../../components/Navigation/Navigation";
-import AllPosts from "../../components/Posts";
+import AllPosts from "../../components/AllPosts";
 import Button from "../../components/UI/Button";
 import { BsArrow90DegLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const MyPosts = () => {
   const navigate = useNavigate();
   const backHandler = () => {
-    navigate("posts");
+    navigate("/posts");
   };
   const addNewPostHandler = () => {
     navigate("/myposts/addpost");

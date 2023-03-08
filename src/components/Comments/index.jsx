@@ -1,9 +1,8 @@
 import CommentItem from "./CommentItem";
 
-
 const Comments = ({ comments }) => {
   return (
-    <ul className="">
+    <ul className="comment__list">
       {comments?.map((comment) => (
         <CommentItem key={comment.id} {...comment} />
       ))}
