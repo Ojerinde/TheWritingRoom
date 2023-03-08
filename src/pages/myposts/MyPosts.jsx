@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const MyPosts = () => {
   const navigate = useNavigate();
   const backHandler = () => {
-    navigate("/home");
+    navigate("posts");
   };
   const addNewPostHandler = () => {
     navigate("/myposts/addpost");

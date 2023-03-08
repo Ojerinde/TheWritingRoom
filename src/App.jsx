@@ -9,9 +9,11 @@ import LandingPage from "./pages/landingpage";
 import MyPostsHome from "./pages/myposts";
 import MyPosts from "./pages/myposts/MyPosts";
 import AddNewPost from "./pages/myposts/AddPost";
+import PostDetails from "./pages/myposts/PostDetails";
+import PostsHome from "./pages/home";
 
 // Dynamic Imports (Lazy - loading)
-const Home = lazy(() => import("./pages/home"));
+const Home = lazy(() => import("./pages/home/Home"));
 
 // Error Boundary FallbackComponent: This is the function that will be called whenever the errorboundary component caught an error
 const ErrorFallback = (props) => {
@@ -39,11 +41,16 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/home" element={<Home />} />
+
+          <Route path="/posts" element={<PostsHome />}>
+            <Route path="" element={<Home />} />
+            <Route path=":postId" element={<PostDetails />} />
+          </Route>
 
           {/* Nexted Route */}
           <Route path="/myposts" element={<MyPostsHome />}>
             <Route path="" element={<MyPosts />} />
+            <Route path=":postId" element={<PostDetails />} />
             <Route path="addpost" element={<AddNewPost />} />
           </Route>
 

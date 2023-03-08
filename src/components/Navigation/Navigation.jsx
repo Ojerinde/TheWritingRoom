@@ -16,7 +16,6 @@ const Navigation = () => {
 
     const stickyNav = function (entries) {
       const [entry] = entries;
-      console.log(nav.classList, header, entry.isIntersecting);
       if (!entry.isIntersecting) nav.classList.add(`sticky`);
       else nav.classList.remove(`sticky`);
     };
@@ -35,7 +34,7 @@ const Navigation = () => {
         <div
           className="logo"
           onClick={() => {
-            navigate("/home");
+            navigate("/posts");
           }}
         >
           <img src={logo} alt="Joe's Blog" />

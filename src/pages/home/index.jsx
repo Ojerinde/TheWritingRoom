@@ -1,12 +1,10 @@
-import Navigation from "../../components/Navigation/Navigation";
-import AllPosts from "../../components/Posts";
+import { Outlet } from "react-router-dom";
 
-const Home = () => {
+const PostsHome = () => {
   return (
     <>
-      <Navigation />
-      <AllPosts />
+      <Outlet />
     </>
   );
 };
-export default Home;
+export default PostsHome;

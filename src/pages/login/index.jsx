@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Form from "./Form";
 import classes from "./Login.module.css";
 
 const Login = () => {
-  const signInHandler = async (formData) => {};
+  const navigate = useNavigate();
+  const signInHandler = async (formData) => {
+    navigate("/posts");
+  };
 
   return (
     <>

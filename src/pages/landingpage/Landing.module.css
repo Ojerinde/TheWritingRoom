@@ -1,7 +1,10 @@
 .section {
   padding: 4rem 8rem;
   height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
+
 .landing {
   margin-top: 2rem;
   display: flex;
@@ -76,17 +79,16 @@
   width: 100%;
   border-radius: 2rem;
 }
-.animate {
-  position: relative;
-  white-space: nowrap;
-}
 
-.animate span {
+.animate {
+  padding: 3rem;
   position: absolute;
+  white-space: nowrap;
   top: 0;
   left: 0;
-  animation: slide-right-to-left 10s linear infinite;
-  font-size: 2rem;
+  animation: slide-right-to-left 15s linear infinite;
+  font-size: 3.5rem;
+  font-weight: 300;
   letter-spacing: 0.2rem;
 }
 

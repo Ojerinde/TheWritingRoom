@@ -1,18 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../UI/Button";
 
-const PostItem = ({ title, author, body }) => {
+const PostItem = ({ id, title, author, body }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  console.log(pathname);
   const fullPostHandler = () => {
-    navigate(0);
+    navigate(`${pathname}/` + id);
   };
   return (
     <li>
-      <p>
+      <div>
         <h2 className="post-title">{title}</h2>
         <p className="post-author">{author}</p>
         <p className="post-body">{`${body}`.split(".")[0]}.</p>
-      </p>
+      </div>
       <p>
         <Button className="post-button" onClick={fullPostHandler}>
           See full post
