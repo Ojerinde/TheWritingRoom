@@ -75,6 +75,7 @@ const AddNewPost = () => {
     e.preventDefault();
     const editContent = GetItemFromLocalStorage("edit");
     const getResponse = (responseBody) => {
+      console.log(responseBody);
       if (path === "/posts") {
         UpdateLocalStorageItem("posts", {
           ...responseBody,
@@ -90,6 +91,7 @@ const AddNewPost = () => {
           id: editContent.id,
         });
         const updatedPosts = GetItemFromLocalStorage("userposts");
+        SetItemToLocalStorage("userposts", updatedPosts);
         updateUserPostState(updatedPosts);
       }
 

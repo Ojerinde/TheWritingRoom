@@ -12,20 +12,24 @@ const AllPosts = ({ title, isLoading, error, allPosts, postsPerPage }) => {
   };
   return (
     <div>
-      {isLoading && !allPosts && <LoadingSpinner />}
+      {!isLoading && !allPosts && <LoadingSpinner type="full" />}
       {!isLoading && error?.hasError && <Error message={error?.message} />}
-      <h3 className="post-list-title">{title}</h3>
-      <ul className="post-list">
-        {allPosts.slice(start, end).map((post, index) => (
-          <PostItem
-            key={index}
-            id={post.id}
-            userId={post.userId}
-            title={post.title}
-            body={post.body}
-          />
-        ))}
-      </ul>
+      {allPosts.length > 0 && (
+        <>
+          <h3 className="post-list-title">{title}</h3>
+          <ul className="post-list">
+            {allPosts.slice(start, end).map((post, index) => (
+              <PostItem
+                key={index}
+                id={post.id}
+                userId={post.userId}
+                title={post.title}
+                body={post.body}
+              />
+            ))}
+          </ul>
+        </>
+      )}
       {allPosts.length > 0 && (
         <Pagination
           postsPerPage={postsPerPage}

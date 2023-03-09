@@ -4,7 +4,10 @@ import { useContext, useEffect } from "react";
 
 import logo from "../../assets/favicon-2.png";
 import { AppContext } from "../../store/AppContext";
-import { GetItemFromLocalStorage } from "../../lib/Validations";
+import {
+  GetItemFromLocalStorage,
+  SetItemToLocalStorage,
+} from "../../lib/Validations";
 // import useFetch from "../../hooks/useFetch";
 
 const Navigation = () => {
@@ -33,6 +36,7 @@ const Navigation = () => {
 
   const logOutHandler = () => {
     updateLoggedInState(false);
+    SetItemToLocalStorage("isLoggedIn", { isLoggedin: false });
   };
   const logInHandler = () => {
     updateLoggedInState(true);

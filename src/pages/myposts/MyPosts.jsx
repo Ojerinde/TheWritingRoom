@@ -25,7 +25,7 @@ const MyPosts = () => {
 
   useEffect(() => {
     const userposts = GetItemFromLocalStorage("userposts");
-    if (userposts.length === 0) {
+    if (!userposts) {
       const getPosts = (responseBody) => {
         SetItemToLocalStorage("userposts", responseBody);
         updateUserPostState(responseBody);

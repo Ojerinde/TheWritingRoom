@@ -14,7 +14,7 @@ const Home = () => {
   const { allPosts, updateAllPostState } = useContext(AppContext);
   useEffect(() => {
     const posts = GetItemFromLocalStorage("posts");
-    if (posts.length === 0) {
+    if (!posts) {
       const getPosts = (responseBody) => {
         SetItemToLocalStorage("posts", responseBody);
         updateAllPostState(responseBody);

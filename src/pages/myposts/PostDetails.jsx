@@ -45,6 +45,7 @@ const PostDetails = () => {
     return pos.id === +postId;
   });
   const backHandler = () => {
+    console.log("Triggered");
     navigate(path);
   };
 
@@ -61,6 +62,7 @@ const PostDetails = () => {
     const areYouSure = confirm("Are you sure?");
     if (!areYouSure) return;
     const getResponse = (responseBody) => {
+      backHandler();
       if (path === "/posts") {
         DeleteLocalStorageItem("posts", +postId);
         const updatedPosts = GetItemFromLocalStorage("posts");
@@ -70,8 +72,8 @@ const PostDetails = () => {
         DeleteLocalStorageItem("userposts", +postId);
         const updatedPosts = GetItemFromLocalStorage("userposts");
         updateUserPostState(updatedPosts);
+        backHandler();
       }
-      navigate(path);
     };
     fetchComments(
       {

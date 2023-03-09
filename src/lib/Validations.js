@@ -33,7 +33,7 @@ export function AddUserToLocalStorage(key, newUser) {
 }
 export function AddItemToLocalStorage(key, newItem) {
   const fetchedItem = GetItemFromLocalStorage(key);
-  const item = { ...newItem, id: fetchedItem.length };
+  const item = { ...newItem, id: fetchedItem.length + 1 };
   const allItems = [item, ...fetchedItem];
   SetItemToLocalStorage(key, allItems);
 }
@@ -51,9 +51,7 @@ export function UpdateLocalStorageItem(key, newItem) {
 
 export function DeleteLocalStorageItem(key, index) {
   const fetchedItem = GetItemFromLocalStorage(key);
-  console.log(key, index);
   const allItems = [...fetchedItem];
   const updatedItems = allItems.filter((item) => item.id !== index);
-  console.log(allItems, updatedItems);
   SetItemToLocalStorage(key, updatedItems);
 }
