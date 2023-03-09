@@ -6,7 +6,7 @@ import Button from "../../components/UI/Button";
 
 import classes from "./LoginForm.module.css";
 // import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-const Form = ({ onSubmit }) => {
+const Form = ({ onSubmit, error }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordIcon] = useState(true);
   const [form, setForm] = useState({
@@ -70,10 +70,7 @@ const Form = ({ onSubmit }) => {
     event.preventDefault();
     const { emailIsValid, passwordIsValid } = form;
     if (!emailIsValid || !passwordIsValid) return;
-    console.log({
-      email: form.email,
-      password: form.password,
-    });
+
     // Send form details to parent component
     onSubmit({
       email: form.email,
@@ -114,6 +111,11 @@ const Form = ({ onSubmit }) => {
           MinLength(8), uppercase, lowercase, character, number
         </pre>
       )}
+      <div>
+        {error.hasError && (
+          <p className={classes.error__message}>{error.message}</p>
+        )}
+      </div>
 
       <div className={classes.btn__box}>
         <Button id="btn__submit" type="submit" className={classes.button}>

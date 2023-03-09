@@ -4,6 +4,7 @@ import { useReducer, useCallback } from "react";
 const initialState = {
   isLoading: false,
   error: { hasError: false, message: "" },
+  success: false,
 };
 
 // This is the function that will be dispatched whenever an action is dispatched.
@@ -14,6 +15,9 @@ const fetchReducer = (state, action) => {
   if (action.type === "ERROR") {
     return { ...state, error: action.value };
   }
+  if (action.type === "SUCCESS") {
+    return { ...state, success: action.value };
+  }
   return initialState;
 };
 
@@ -21,16 +25,12 @@ const useFetch = () => {
   // Managing state
   const [fetchState, dispatchFn] = useReducer(fetchReducer, initialState);
 
-  // A function to hide error modal
-  const hideModal = () => {
-    dispatchFn({ type: "ERROR", value: { hasError: false, message: "" } });
-  };
-
   // A function to fetch data
   const fetchRequest = useCallback(
     async (requestConfig, getRequestData = () => {}) => {
       dispatchFn({ type: "LOADING", value: true });
       dispatchFn({ type: "ERROR", value: { hasError: false, message: "" } });
+      dispatchFn({ type: "SUCCESS", value: false });
       try {
         // Fetching data using the configuration provided
         const response = await fetch(requestConfig.url, {
@@ -38,11 +38,11 @@ const useFetch = () => {
           body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,
           headers: requestConfig.headers ? requestConfig.headers : {},
         });
-
         // If the response is not ok, throw an error
         if (!response.ok) {
           throw new Error(`${requestConfig.errorMessage}`);
         }
+        dispatchFn({ type: "SUCCESS", value: true });
 
         // If the response is ok, get the data
         const responseBody = await response.json();
@@ -63,7 +63,7 @@ const useFetch = () => {
               message: "",
             },
           });
-        }, 2000);
+        }, 4000);
       }
       // After the request has been made, set the loading state to false
       dispatchFn({ type: "LOADING", value: false });
@@ -72,9 +72,9 @@ const useFetch = () => {
   );
 
   // Destcturing the state
-  const { isLoading, error } = fetchState;
+  const { isLoading, error, success } = fetchState;
 
   // Returning the state and the functions
-  return { isLoading, error, hideModal, fetchRequest };
+  return { isLoading, error, success, fetchRequest };
 };
 export default useFetch;

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 
@@ -12,6 +12,10 @@ import AddNewPost from "./pages/myposts/AddPost";
 import PostDetails from "./pages/myposts/PostDetails";
 import PostsHome from "./pages/home";
 import NotFound from "./pages/404/NotFound";
+import {
+  GetItemFromLocalStorage,
+  SetItemToLocalStorage,
+} from "./lib/Validations";
 
 // Dynamic Imports (Lazy - loading)
 const Home = lazy(() => import("./pages/home/Home"));
@@ -29,7 +33,20 @@ const ErrorFallback = (props) => {
 
 const App = () => {
   const navigate = useNavigate();
-
+  useEffect(() => {
+    const users = GetItemFromLocalStorage("users");
+    if (!users) {
+      SetItemToLocalStorage("users", [
+        {
+          firstname: "Ojerinde",
+          lastname: "Joel",
+          email: "joelojerinde@gmail.com",
+          password: "Password@123",
+          confirmpassword: "Password@123",
+        },
+      ]);
+    }
+  }, []);
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}

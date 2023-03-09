@@ -10,7 +10,13 @@
     width: 95%;
   }
 }
-
+.post-list-title {
+  width: 70%;
+  margin: 4rem auto 2rem;
+  font-size: 4rem;
+  letter-spacing: 0.4rem;
+  color: $primary-color;
+}
 .post-list li {
   padding: 1rem;
   border: 0.1rem solid #ddd;

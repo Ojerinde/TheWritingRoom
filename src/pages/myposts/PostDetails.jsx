@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Comments from "../../components/Comments";
 import CommentBox from "../../components/Comments/CommentBox";
 import { BsPersonCircle } from "react-icons/bs";
@@ -7,27 +7,22 @@ import { AiFillEdit, AiFillDelete, AiOutlineComment } from "react-icons/ai";
 import { BsArrow90DegLeft } from "react-icons/bs";
 import Footer from "../../components/Footer/Footer";
 import Navigation from "../../components/Navigation/Navigation";
-const comments = [
-  {
-    id: 1,
-    author: "John Doe",
-    date: "2023-03-06",
-    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis justo eget risus efficitur lobortis at non ligula. Nam consequat, dolor sed tristique fermentum.",
-  },
-  {
-    id: 2,
-    author: "Jane Smith",
-    date: "2023-03-07",
-    body: "Pellentesque in bibendum tortor, sit amet consequat odio. Cras non nulla sit amet velit feugiat pretium. Nulla et neque eget lacus commodo suscipit at sed sapien.",
-  },
-  {
-    id: 3,
-    author: "Bob Johnson",
-    date: "2023-03-08",
-    body: "Phasellus vel mi a lorem aliquet rutrum. Etiam sit amet mi vel mauris congue posuere vel id orci. Aliquam ac nisi eu ante fringilla viverra ut vel arcu.",
-  },
-];
+import { AppContext } from "../../store/AppContext";
+import useFetch from "../../hooks/useFetch";
+import {
+  AddItemToLocalStorage,
+  DeleteLocalStorageItem,
+  GetItemFromLocalStorage,
+  SetItemToLocalStorage,
+} from "../../lib/Validations";
+
 const PostDetails = () => {
+  const {
+    updateAllPostState,
+    updateUserPostState,
+    fetchRequest: fetchComments,
+  } = useFetch();
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const params = useParams();
@@ -39,13 +34,101 @@ const PostDetails = () => {
   const [remove, setDelete] = useState(false);
   const [edit, setEdit] = useState(false);
 
+  const [comments, setComments] = useState([]);
+
+  const { userPosts, allPosts } = useContext(AppContext);
+  const lastIndex = pathname?.lastIndexOf("/");
+  const path = pathname?.slice(0, lastIndex);
+
+  const selectedPosts = path === "/myposts" ? userPosts : allPosts;
+  const post = selectedPosts?.find((pos) => {
+    return pos.id === +postId;
+  });
   const backHandler = () => {
-    navigate("/posts");
+    navigate(path);
   };
+
   const closeCommentBox = () => {
     setShowCommentBox(false);
   };
 
+  const editHandler = () => {
+    navigate(`${pathname}/edit`);
+    SetItemToLocalStorage("edit", post);
+  };
+  const deleteHandler = () => {
+    // eslint-disable-next-line no-restricted-globals
+    const areYouSure = confirm("Are you sure?");
+    if (!areYouSure) return;
+    const getResponse = (responseBody) => {
+      if (path === "/posts") {
+        DeleteLocalStorageItem("posts", +postId);
+        const updatedPosts = GetItemFromLocalStorage("posts");
+        updateAllPostState(updatedPosts);
+      }
+      if (path === "/myposts") {
+        DeleteLocalStorageItem("userposts", +postId);
+        const updatedPosts = GetItemFromLocalStorage("userposts");
+        updateUserPostState(updatedPosts);
+      }
+      navigate(path);
+    };
+    fetchComments(
+      {
+        url: `https://jsonplaceholder.typicode.com/posts/${postId}`,
+        method: "DELETE",
+        errorMessage: "Failed to delete",
+      },
+      getResponse
+    );
+  };
+
+  const addCommentHandler = (input) => {
+    const comment = {
+      body: input.body,
+      email: input.email,
+      postId: postId,
+    };
+    const getComments = (responseBody) => {
+      AddItemToLocalStorage(`comments${postId}`, responseBody);
+      const updatedComments = GetItemFromLocalStorage(`comments${postId}`);
+      setComments(updatedComments);
+      setShowCommentBox(false);
+    };
+    fetchComments(
+      {
+        url: `https://jsonplaceholder.typicode.com/posts/${postId}/comments`,
+        method: "POST",
+        body: comment,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        errorMessage: "Failed to add comment",
+      },
+      getComments
+    );
+  };
+
+  useEffect(() => {
+    const initialComment = GetItemFromLocalStorage(`comments${postId}`);
+    if (!initialComment) {
+      const getComments = (responseBody) => {
+        setComments(responseBody);
+        SetItemToLocalStorage(`comments${postId}`, responseBody);
+      };
+      fetchComments(
+        {
+          url: `https://jsonplaceholder.typicode.com/posts/${postId}/comments`,
+          errorMessage: "Failed to fetch comments",
+        },
+        getComments
+      );
+    } else {
+      SetItemToLocalStorage(`comments${postId}`, comments);
+      setComments(initialComment);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchComments, postId]);
   return (
     <>
       <Navigation />
@@ -59,18 +142,12 @@ const PostDetails = () => {
         <div className="post__body">
           <div className="post__details--header">
             <BsPersonCircle className="post__details--img" />
-            <h3 className="post__details--h3">Ojerinde Joel</h3>
+            <h3 className="post__details--h3">
+              User Id: {post?.userId} ; Post Id: {+postId}
+            </h3>
           </div>
-          <h1 className="post__details--h1">
-            {" "}
-            Lorem ipsum dolor sit amet consectetur{" "}
-          </h1>
-          <article className="post__details--article">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-            dolore dolorem nisi molestias ea fuga iusto sit, molestiae natus, at
-            iste quia et similique! Reprehenderit voluptatibus assumenda eum qui
-            esse?
-          </article>
+          <h1 className="post__details--h1">{post?.title}</h1>
+          <article className="post__details--article">{post?.body}</article>
           <div className="post__details--footer">
             <div
               onClick={() => setShowCommentBox(true)}
@@ -90,7 +167,7 @@ const PostDetails = () => {
                 className="post__details--icon post__details--icon__2"
                 onMouseEnter={() => setEdit(true)}
                 onMouseLeave={() => setEdit(false)}
-                onClick={() => navigate(`${pathname}/edit`)}
+                onClick={editHandler}
               />
             </div>
             <div className="post__details--iconbox">
@@ -99,17 +176,18 @@ const PostDetails = () => {
                 className="post__details--icon post__details--icon__3"
                 onMouseEnter={() => setDelete(true)}
                 onMouseLeave={() => setDelete(false)}
+                onClick={deleteHandler}
               />
             </div>
           </div>
         </div>
         {showCommentBox && (
           <div className="post__comment--box">
-            <CommentBox onClose={closeCommentBox} />
+            <CommentBox onClose={closeCommentBox} onAdd={addCommentHandler} />
           </div>
         )}
         <div className="post__comment--list">
-          <Comments comments={comments} postId={postId} />
+          <Comments comments={comments} />
         </div>
       </section>
       <Footer />

@@ -1,13 +1,16 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 // import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 import logo from "../../assets/favicon-2.png";
+import { AppContext } from "../../store/AppContext";
+import { GetItemFromLocalStorage } from "../../lib/Validations";
 // import useFetch from "../../hooks/useFetch";
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const isLoggedIn = true;
+  const { isLoggedIn, updateLoggedInState } = useContext(AppContext);
+  const loggedIn = GetItemFromLocalStorage("isLoggedIn");
 
   useEffect(() => {
     // Sticky navigation
@@ -27,6 +30,13 @@ const Navigation = () => {
 
     headerObserver.observe(header);
   }, []);
+
+  const logOutHandler = () => {
+    updateLoggedInState(false);
+  };
+  const logInHandler = () => {
+    updateLoggedInState(true);
+  };
 
   return (
     <header className="navigation__container" id="header">
@@ -50,10 +60,14 @@ const Navigation = () => {
             </NavLink>
           </li>
           <li>
-            {isLoggedIn ? (
-              <Link to="/">Logout</Link>
+            {isLoggedIn || loggedIn.isLoggedin ? (
+              <Link to="/" onClick={logOutHandler}>
+                Logout
+              </Link>
             ) : (
-              <Link to="/login">Login</Link>
+              <Link to="/login" onClick={logInHandler}>
+                Login
+              </Link>
             )}
           </li>
         </ul>

@@ -1,4 +1,11 @@
 .comment {
+  &__title {
+    width: 100%;
+    margin: 3rem auto 1rem;
+    font-size: 2.8rem;
+    letter-spacing: 0.4rem;
+    color: $primary-color;
+  }
   &__list {
     list-style: none;
   }

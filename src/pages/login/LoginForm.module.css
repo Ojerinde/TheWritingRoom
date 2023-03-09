@@ -33,12 +33,13 @@
 
 .error__message {
   text-align: center;
-  border: 0.1rem solid rgba(175, 168, 168, 0.7);
-  font-size: 1.4rem;
-  color: rgba(176, 156, 156, 0.7);
-  padding: 0.5rem 0;
-  border-radius: 10rem;
+  border: 0.1rem solid rgba(119, 105, 105, 0.7);
+  font-size: 1.8rem;
+  color: #44607c;
+  padding: 0.8rem 0;
+  border-radius: 0.4rem;
 }
+
 .forget:link,
 .forget:visited {
   display: block;

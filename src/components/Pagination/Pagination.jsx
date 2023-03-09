@@ -46,9 +46,13 @@ const Pagination = (props) => {
                 props.onChange(each);
                 setPage((page) => each);
               }}
-              className={`${page === each ? "active__button" : ""}`}
+              className={`${
+                page === each
+                  ? "active__button pagination__btn"
+                  : "pagination__btn"
+              }`}
             >
-              {each}
+              {`${each}`.padStart(2, 0)}
             </button>
           )
         )}

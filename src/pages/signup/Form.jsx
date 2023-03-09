@@ -6,6 +6,8 @@ import Input from "../login/LoginInput";
 import Button from "../../components/UI/Button";
 
 import classes from "./SignUpForm.module.css";
+import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 // import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const checkFormValidity = (form, setForm, e = {}) => {
@@ -28,7 +30,8 @@ const checkFormValidity = (form, setForm, e = {}) => {
   }
 };
 
-const Form = ({ onSubmit }) => {
+const Form = ({ onSubmit, isLoading, error, success }) => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordIcon] = useState(true);
@@ -170,14 +173,6 @@ const Form = ({ onSubmit }) => {
   const submitHandler = (event) => {
     event.preventDefault();
     // Send form details to backend
-    console.log({
-      firstname: form.firstname,
-      lastname: form.lastname,
-      email: form.email,
-      password: form.password,
-      confirmpassword: form.confirmpassword,
-    });
-
     onSubmit({
       firstname: form.firstname,
       lastname: form.lastname,
@@ -187,23 +182,23 @@ const Form = ({ onSubmit }) => {
     });
 
     // Clearing the input fields
-    setForm({
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmpassword: "",
-      firstnameIsValid: false,
-      lastnameIsValid: false,
-      emailIsValid: false,
-      passwordIsValid: false,
-      confirmpasswordIsValid: false,
-      firstnameIsFocus: false,
-      lastnameIsFocus: false,
-      emailIsFocus: false,
-      confirmpasswordIsFocus: false,
-      formIsValid: false,
-    });
+    // setForm({
+    //   firstname: "",
+    //   lastname: "",
+    //   email: "",
+    //   password: "",
+    //   confirmpassword: "",
+    //   firstnameIsValid: false,
+    //   lastnameIsValid: false,
+    //   emailIsValid: false,
+    //   passwordIsValid: false,
+    //   confirmpasswordIsValid: false,
+    //   firstnameIsFocus: false,
+    //   lastnameIsFocus: false,
+    //   emailIsFocus: false,
+    //   confirmpasswordIsFocus: false,
+    //   formIsValid: false,
+    // });
   };
 
   return (
@@ -309,6 +304,27 @@ const Form = ({ onSubmit }) => {
             </pre>
           )}
         </div>
+      </div>
+      <div>
+        {isLoading && <LoadingSpinner />}
+        {!isLoading && error.hasError && (
+          <p
+            className={classes.error__message}
+          >{`Sign up failed! - ${error.message}`}</p>
+        )}
+        {success && (
+          <p className={classes.span__box}>
+            Successfully Signed Up!
+            <span>
+              <Button
+                className={classes.success_button}
+                onClick={() => navigate("/login")}
+              >
+                Login to continue
+              </Button>
+            </span>
+          </p>
+        )}
       </div>
 
       <div className={classes.btn__box}>

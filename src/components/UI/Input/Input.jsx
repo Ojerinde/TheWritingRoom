@@ -7,7 +7,7 @@ const Input = React.forwardRef((props, ref) => {
     <div className="input__group">
       <label>{props.label}</label>
       {field === "input" ? (
-        <input {...others} ref={ref}></input>
+        <input {...others} ref={ref} className={className}></input>
       ) : (
         <textarea {...others} ref={ref} className={className}></textarea>
       )}
